@@ -1,6 +1,5 @@
-# example_plugin.py
+from video_processor import VideoProcessor
 
-from video_framework import VideoProcessor
 
 class ExamplePlugin(VideoProcessor):
     def __init__(self):

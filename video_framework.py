@@ -1,36 +1,23 @@
 import os
 import mimetypes
 import logging
-from abc import ABC, abstractmethod
+from example_plugin import ExamplePlugin
+from video_compressor import VideoCompressor
 from configparser import ConfigParser
-from pkg_resources import iter_entry_points
 import argparse
 
 # 错误处理与日志记录 (优化3)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class VideoProcessor(ABC):
-    @abstractmethod
-    def process(self, input_path: str, output_path: str) -> None:
-        pass
-
-    # 插件配置 (优化9)
-    def configure(self, config: dict) -> None:
-        pass
 
 class PluginManager:
+
     def __init__(self):
-        self.plugins = {}
-        self.discover_plugins()  # 自动插件发现与注册 (优化1)
-
-    # 自动插件发现与注册 (优化1)
-    def discover_plugins(self):
-        for entry_point in iter_entry_points('video_processors'):
-            self.register_plugin(entry_point.name, entry_point.load())
-
-    def register_plugin(self, name: str, plugin_class: type) -> None:
-        self.plugins[name] = plugin_class()
+        self.plugins = {
+            'example_plugin': ExamplePlugin(),
+            'video_compressor': VideoCompressor(),
+        }
 
     def process_video(self, plugin_name: str, input_path: str, output_path: str) -> None:
         if plugin_name not in self.plugins:
@@ -43,10 +30,12 @@ class PluginManager:
         except Exception as e:
             logger.error("处理视频时出错: %s", str(e))
 
+
 # 文件类型过滤 (优化5)
 def is_video_file(file_path):
     mime_type, _ = mimetypes.guess_type(file_path)
     return mime_type is not None and mime_type.startswith('video')
+
 
 # 命令行参数 (优化7)
 def parse_arguments():
@@ -55,6 +44,7 @@ def parse_arguments():
     parser.add_argument("output_folder", help="处理后视频的输出文件夹")
     parser.add_argument("plugin_name", help="要使用的处理插件名称")
     return parser.parse_args()
+
 
 def main():
     args = parse_arguments()
@@ -79,6 +69,7 @@ def main():
 
         output_path = os.path.join(output_folder, video_file)
         plugin_manager.process_video(plugin_name, input_path, output_path)
+
 
 if __name__ == "__main__":
     main()

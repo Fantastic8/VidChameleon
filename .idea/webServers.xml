@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="37aba526-21f3-4e65-9c43-1a02662f9558" name="Synology">
+        <fileTransfer rootFolder="/homes/fantasticmark/scripts" accessType="SFTP" host="www.fantmark.top" port="5022" sshConfigId="109d2021-0ab5-43ad-9fc3-a44bafb47332" sshConfig="fantasticmark@www.fantmark.top:5022 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
