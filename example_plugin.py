@@ -1,4 +1,5 @@
 from video_processor import VideoProcessor
+import time
 
 
 class ExamplePlugin(VideoProcessor):

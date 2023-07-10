@@ -9,3 +9,11 @@ class VideoProcessor(ABC):
     # 插件配置 (优化9)
     def configure(self, config: dict) -> None:
         pass
+
+    # 插件自定义文件名过滤器,True:处理,False:跳过
+    def file_filter(self, input_file) -> bool:
+        return True
+
+    # 插件自定义文件夹过滤器,True:处理,False:跳过
+    def dir_filter(self, input_dir) -> bool:
+        return True
